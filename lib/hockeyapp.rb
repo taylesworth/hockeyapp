@@ -17,9 +17,6 @@ module HockeyApp
   def build_client options = {}
     ws = WS.new options
     Client.new ws
+    puts "Created client"
   end
 end
-
-
-
-

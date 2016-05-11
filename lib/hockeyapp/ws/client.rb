@@ -24,9 +24,16 @@ module HockeyApp
     end
 
     def get_crash_groups app
-      crash_groups_hash = ws.get_crash_groups app.public_identifier
-      assert_success crash_groups_hash
-      crash_groups_hash["crash_reasons"].map{|reason_hash|CrashGroup.from_hash(reason_hash, app, self)}
+      crash_groups = []
+      page = 1
+      begin
+        crash_groups_hash = ws.get_crash_groups app.public_identifier {page:page, per_page:100}
+        assert_success crash_groups_hash
+        crash_groups.concat(crash_groups_hash["crash_reasons"].map{|reason_hash|CrashGroup.from_hash(reason_hash, app, self)})
+        page += 1
+        num_pages = crash_groups_hash["total_pages"]
+      end until page > num_pages
+      crash_groups
     end
 
     def get_crash_groups_for_version version, options = {}

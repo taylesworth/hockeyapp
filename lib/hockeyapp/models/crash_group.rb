@@ -6,7 +6,8 @@ module HockeyApp
     include ActiveModelCompliance
 
     ATTRIBUTES = [:file, :reason, :status, :id, :crash_class, :bundle_version, :last_crash_at, :app_version_id,
-        :line, :updated_at, :method, :bundle_short_version, :number_of_crashes, :fixed, :created_at, :app_id]
+                  :line, :updated_at, :method, :bundle_short_version, :number_of_crashes, :fixed, :created_at, :app_id,
+                  :exception_type]
 
 
     attr_accessor *ATTRIBUTES
